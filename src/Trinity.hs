@@ -3,7 +3,7 @@ module Trinity where
 
   import qualified Data.Set as Set
 
-  import qualified Data.ByteString as ByteString
+  import qualified Data.ByteString as Byte
 
   import qualified Data.Time as Time
 
@@ -20,6 +20,8 @@ module Trinity where
   get_current_time :: IO Time
   get_current_time = Time <$> Time.getCurrentTime
 
+  newtype Object = Object Byte.ByteString
+
   data Triple
     =
       Triple
@@ -27,7 +29,7 @@ module Trinity where
           triple_id :: !ID,
           triple_subject :: !ID,
           triple_predicate :: !ID,
-          triple_object :: !ByteString.ByteString,
+          triple_object :: !Object,
           triple_time :: !Time,
           triple_author :: !ID
         }
