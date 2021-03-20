@@ -46,7 +46,7 @@ module Trinity where
     deriving stock Show
     deriving stock Read
     deriving stock Generic
-    deriving Binary.Binary via Derived_By_Show_And_Read Time
+    deriving Binary.Binary via Derived_By_Show_And_Read Time.UTCTime
 
   get_current_time :: IO Time
   get_current_time = Time <$> Time.getCurrentTime
