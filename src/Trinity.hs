@@ -57,12 +57,6 @@ module Trinity where
     deriving stock Generic
     deriving anyclass Binary.Binary
 
-  from_data_to_object :: Data -> Object
-  from_data_to_object = Object . Byte.toStrict . Binary.encode
-
-  from_object_to_data :: Object -> Data
-  from_object_to_data = Binary.decode . Byte.fromStrict . unwrap_object
-
   newtype Object = Object { unwrap_object :: Byte.ByteString }
     deriving stock Eq
     deriving stock Ord
@@ -70,6 +64,15 @@ module Trinity where
     deriving stock Read
     deriving stock Generic
     deriving anyclass Binary.Binary
+
+  from_data_to_object :: Data -> Object
+  from_data_to_object = Object . Byte.toStrict . Binary.encode
+
+  from_object_to_data :: Object -> Data
+  from_object_to_data = Binary.decode . Byte.fromStrict . unwrap_object
+
+  from_id_to_object :: ID -> Object
+  from_id_to_object = from_data_to_object . Data_ID
 
   data Triple
     =
