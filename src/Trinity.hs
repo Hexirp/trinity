@@ -11,6 +11,7 @@ module Trinity where
   import qualified Data.Set as Set
 
   import qualified Data.ByteString as Byte
+  import qualified Data.ByteString.Lazy as Byte (fromStrict, toStrict)
 
   import qualified Data.Binary as Binary
 
@@ -47,6 +48,20 @@ module Trinity where
 
   get_current_time :: IO Time
   get_current_time = Time <$> Time.getCurrentTime
+
+  data Data = Data_ID !ID | Data_Text !String | Data_Int !Int
+    deriving stock Eq
+    deriving stock Ord
+    deriving stock Show
+    deriving stock Read
+    deriving stock Generic
+    deriving anyclass Binary.Binary
+
+  from_data_to_object :: Data -> Object
+  from_data_to_object = Object . Byte.toStrict . Binary.encode
+
+  from_object_to_data :: Object -> Data
+  from_object_to_data = Binary.decode . Byte.fromStrict . unwrap_object
 
   newtype Object = Object { unwrap_object :: Byte.ByteString }
     deriving stock Eq
