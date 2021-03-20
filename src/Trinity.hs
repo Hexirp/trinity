@@ -17,14 +17,18 @@ module Trinity where
     =
       Triple
         {
-          triple_id :: ID,
-          triple_subject :: ID,
-          triple_predicate :: ID,
-          triple_object :: ByteString.ByteString,
-          triple_time :: Time,
-          triple_author :: ID
+          triple_id :: !ID,
+          triple_subject :: !ID,
+          triple_predicate :: !ID,
+          triple_object :: !ByteString.ByteString,
+          triple_time :: !Time,
+          triple_author :: !ID
         }
 
   data Model
     =
-      Model { model_id_set :: Set.Set ID, model_triple_set :: Set.Set Triple }
+      Model
+        {
+          model_id_set :: !(Set.Set ID),
+          model_triple_set :: !(Set.Set Triple)
+        }
