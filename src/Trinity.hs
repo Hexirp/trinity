@@ -11,6 +11,8 @@ module Trinity where
 
   import qualified Data.ByteString as Byte
 
+  import qualified Data.Binary as Binary
+
   import qualified Data.Time as Time
 
   import qualified Data.UUID as UUID
@@ -22,6 +24,7 @@ module Trinity where
     deriving stock Show
     deriving stock Read
     deriving stock Generic
+    deriving anyclass Binary.Binary
 
   generate_id :: IO ID
   generate_id = ID <$> UUID.nextRandom
@@ -32,6 +35,7 @@ module Trinity where
     deriving stock Show
     deriving stock Read
     deriving stock Generic
+    deriving anyclass Binary.Binary
 
   get_current_time :: IO Time
   get_current_time = Time <$> Time.getCurrentTime
@@ -42,6 +46,7 @@ module Trinity where
     deriving stock Show
     deriving stock Read
     deriving stock Generic
+    deriving anyclass Binary.Binary
 
   data Triple
     =
@@ -59,6 +64,7 @@ module Trinity where
     deriving stock Show
     deriving stock Read
     deriving stock Generic
+    deriving anyclass Binary.Binary
 
   data Model
     =
@@ -72,6 +78,7 @@ module Trinity where
     deriving stock Show
     deriving stock Read
     deriving stock Generic
+    deriving anyclass Binary.Binary
 
   generate_initial_model :: IO Model
   generate_initial_model = do
