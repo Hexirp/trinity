@@ -5,7 +5,7 @@ module Trinity where
 
   import qualified Data.Time as Time
 
-  import qualified Data.UUID.V4 as UUID
+  import qualified Data.UUID as UUID
 
   newtype ID = ID UUID.UUID
 
