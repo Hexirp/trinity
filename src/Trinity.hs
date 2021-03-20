@@ -51,7 +51,7 @@ module Trinity where
   get_current_time :: IO Time
   get_current_time = Time <$> Time.getCurrentTime
 
-  data Object = ID_Object ID | ByteString_Object Byte.ByteString
+  data Object = ID_Object !ID | ByteString_Object !Byte.ByteString
     deriving stock Eq
     deriving stock Ord
     deriving stock Show
