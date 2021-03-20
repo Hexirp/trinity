@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DerivingVia #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Trinity where
   import Prelude
@@ -17,6 +18,13 @@ module Trinity where
 
   import qualified Data.UUID as UUID
   import qualified Data.UUID.V4 as UUID
+
+  newtype Derived_By_Show_And_Read a
+    = Derived_By_Show_And_Read { unwrap_Derived_By_Show_And_Read :: a }
+
+  instance (Show a, Read a) => Binary.Binary (Derived_By_Show_And_Read a) where
+    put = Binary.put . show . unwrap_Derived_By_Show_And_Read
+    get = Derived_By_Show_And_Read . read <$> Binary.get
 
   newtype ID = ID UUID.UUID
     deriving stock Eq
@@ -35,12 +43,12 @@ module Trinity where
     deriving stock Show
     deriving stock Read
     deriving stock Generic
-    deriving anyclass Binary.Binary
+    deriving Binary.Binary via Derived_By_Show_And_Read Time
 
   get_current_time :: IO Time
   get_current_time = Time <$> Time.getCurrentTime
 
-  newtype Object = Object Byte.ByteString
+  newtype Object = Object { unwrap_object :: Byte.ByteString }
     deriving stock Eq
     deriving stock Ord
     deriving stock Show
