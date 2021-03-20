@@ -110,6 +110,35 @@ module Trinity where
 
   generate_initial_model :: IO Model
   generate_initial_model = do
+    current_time <- get_current_time
     system_user_id <- generate_id
-    adding_operation_id <- generate_id
-    return undefined
+    adding_new_id_operation_id <- generate_id
+    su_add_su_id_triple_id <- generate_id
+    su_add_aio_id_triple_id <- generate_id
+
+    pure
+      (Model
+        (Set.fromList
+          [
+            system_user_id,
+            adding_new_id_operation_id,
+            su_add_su_id_triple_id,
+            su_add_aio_id_triple_id
+          ])
+        (Set.fromList
+          [
+            Triple
+              system_user_id
+              adding_new_id_operation_id
+              (from_id_to_object system_user_id)
+              su_add_su_id_triple_id
+              current_time
+              system_user_id,
+            Triple
+              system_user_id
+              adding_new_id_operation_id
+              (from_id_to_object adding_new_id_operation_id)
+              su_add_aio_id_triple_id
+              current_time
+              system_user_id
+          ]))
