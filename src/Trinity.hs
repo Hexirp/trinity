@@ -51,30 +51,13 @@ module Trinity where
   get_current_time :: IO Time
   get_current_time = Time <$> Time.getCurrentTime
 
-  data Data = Data_ID !ID | Data_Text !Text.Text | Data_Int !Int
+  data Object = ID_Object ID | ByteString_Object Byte.ByteString
     deriving stock Eq
     deriving stock Ord
     deriving stock Show
     deriving stock Read
     deriving stock Generic
     deriving anyclass Binary.Binary
-
-  newtype Object = Object { unwrap_object :: Byte.ByteString }
-    deriving stock Eq
-    deriving stock Ord
-    deriving stock Show
-    deriving stock Read
-    deriving stock Generic
-    deriving anyclass Binary.Binary
-
-  from_data_to_object :: Data -> Object
-  from_data_to_object = Object . Byte.toStrict . Binary.encode
-
-  from_object_to_data :: Object -> Data
-  from_object_to_data = Binary.decode . Byte.fromStrict . unwrap_object
-
-  from_id_to_object :: ID -> Object
-  from_id_to_object = from_data_to_object . Data_ID
 
   data Triple
     =
@@ -130,14 +113,14 @@ module Trinity where
             Triple
               system_user_id
               adding_new_id_operation_id
-              (from_id_to_object system_user_id)
+              (ID_Object system_user_id)
               su_add_su_id_triple_id
               current_time
               system_user_id,
             Triple
               system_user_id
               adding_new_id_operation_id
-              (from_id_to_object adding_new_id_operation_id)
+              (ID_Object adding_new_id_operation_id)
               su_add_aio_id_triple_id
               current_time
               system_user_id
