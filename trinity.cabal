@@ -1,0 +1,62 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 384ea6287d296b46d2671b3812bfe8c12061e5905877267f04d0d15a888e71dd
+
+name:           trinity
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/Hexirp/trinity#readme>
+homepage:       https://github.com/Hexirp/trinity#readme
+bug-reports:    https://github.com/Hexirp/trinity/issues
+author:         Hexirp
+maintainer:     hexirp@gmail.com
+copyright:      (C) Hexirp 2021
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/Hexirp/trinity
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_trinity
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable trinity-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_trinity
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , trinity
+  default-language: Haskell2010
+
+test-suite trinity-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_trinity
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , trinity
+  default-language: Haskell2010
