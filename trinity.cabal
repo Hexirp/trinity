@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8d74eb7073fbb4e615722afa22c3470524e8229157e06eddc979bcb30882a1ad
+-- hash: 71ce9d06a52f31c1d0de3586c28775eef7750769f902ab52dab43cae001d9a0c
 
 name:           trinity
 version:        0.1.0.0
@@ -36,6 +36,8 @@ library
   build-depends:
       base >=4.7 && <4.14
     , containers >=0.6.2.1 && <0.7
+    , time >=1.9.3 && <1.10
+    , uuid >=1.3.13 && <1.4
   default-language: Haskell2010
 
 executable trinity-exe
@@ -48,7 +50,9 @@ executable trinity-exe
   build-depends:
       base >=4.7 && <4.14
     , containers >=0.6.2.1 && <0.7
+    , time >=1.9.3 && <1.10
     , trinity
+    , uuid >=1.3.13 && <1.4
   default-language: Haskell2010
 
 test-suite trinity-test
@@ -62,5 +66,7 @@ test-suite trinity-test
   build-depends:
       base >=4.7 && <4.14
     , containers >=0.6.2.1 && <0.7
+    , time >=1.9.3 && <1.10
     , trinity
+    , uuid >=1.3.13 && <1.4
   default-language: Haskell2010
