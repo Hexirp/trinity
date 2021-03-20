@@ -80,10 +80,10 @@ module Trinity where
     =
       Triple
         {
-          triple_id :: !ID,
           triple_subject :: !ID,
           triple_predicate :: !ID,
           triple_object :: !Object,
+          triple_id :: !ID,
           triple_time :: !Time,
           triple_author :: !ID
         }
