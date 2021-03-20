@@ -15,6 +15,8 @@ module Trinity where
 
   import qualified Data.Binary as Binary
 
+  import qualified Data.Text as Text
+
   import qualified Data.Time as Time
 
   import qualified Data.UUID as UUID
@@ -49,7 +51,7 @@ module Trinity where
   get_current_time :: IO Time
   get_current_time = Time <$> Time.getCurrentTime
 
-  data Data = Data_ID !ID | Data_Text !String | Data_Int !Int
+  data Data = Data_ID !ID | Data_Text !Text.Text | Data_Int !Int
     deriving stock Eq
     deriving stock Ord
     deriving stock Show
