@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DerivingVia #-}
 {-# LANGUAGE DerivingStrategies #-}
@@ -29,18 +30,18 @@ module Trinity where
     put = Binary.put . show . unwrap_Derived_By_Show_And_Read
     get = Derived_By_Show_And_Read . read <$> Binary.get
 
-  newtype ID = ID UUID.UUID
+  newtype ID = ID { unwrap_ID :: UUID.UUID }
     deriving stock Eq
     deriving stock Ord
     deriving stock Show
     deriving stock Read
     deriving stock Generic
-    deriving anyclass Binary.Binary
+    deriving newtype Binary.Binary
 
   generate_id :: IO ID
   generate_id = ID <$> UUID.nextRandom
 
-  newtype Time = Time Time.UTCTime
+  newtype Time = Time { unwrap_Time :: Time.UTCTime }
     deriving stock Eq
     deriving stock Ord
     deriving stock Show
@@ -51,21 +52,21 @@ module Trinity where
   get_current_time :: IO Time
   get_current_time = Time <$> Time.getCurrentTime
 
-  newtype Subject = Subject ID
+  newtype Subject = Subject { unwrap_Subject :: ID }
     deriving stock Eq
     deriving stock Ord
     deriving stock Show
     deriving stock Read
     deriving stock Generic
-    deriving anyclass Binary.Binary
+    deriving newtype Binary.Binary
 
-  newtype Predicate = Predicate ID
+  newtype Predicate = Predicate { unwrap_Predicate :: ID }
     deriving stock Eq
     deriving stock Ord
     deriving stock Show
     deriving stock Read
     deriving stock Generic
-    deriving anyclass Binary.Binary
+    deriving newtype Binary.Binary
 
   data Object = ID_Object !ID | ByteString_Object !Byte.ByteString
     deriving stock Eq
@@ -75,13 +76,13 @@ module Trinity where
     deriving stock Generic
     deriving anyclass Binary.Binary
 
-  newtype User_ID = User_ID ID
+  newtype User_ID = User_ID { unwrap_User_ID :: ID }
     deriving stock Eq
     deriving stock Ord
     deriving stock Show
     deriving stock Read
     deriving stock Generic
-    deriving anyclass Binary.Binary
+    deriving newtype Binary.Binary
 
   data Triple
     =
