@@ -51,7 +51,31 @@ module Trinity where
   get_current_time :: IO Time
   get_current_time = Time <$> Time.getCurrentTime
 
+  newtype Subject = Subject ID
+    deriving stock Eq
+    deriving stock Ord
+    deriving stock Show
+    deriving stock Read
+    deriving stock Generic
+    deriving anyclass Binary.Binary
+
+  newtype Predicate = Predicate ID
+    deriving stock Eq
+    deriving stock Ord
+    deriving stock Show
+    deriving stock Read
+    deriving stock Generic
+    deriving anyclass Binary.Binary
+
   data Object = ID_Object !ID | ByteString_Object !Byte.ByteString
+    deriving stock Eq
+    deriving stock Ord
+    deriving stock Show
+    deriving stock Read
+    deriving stock Generic
+    deriving anyclass Binary.Binary
+
+  newtype User_ID = User_ID ID
     deriving stock Eq
     deriving stock Ord
     deriving stock Show
@@ -63,12 +87,12 @@ module Trinity where
     =
       Triple
         {
-          triple_subject :: !ID,
-          triple_predicate :: !ID,
+          triple_subject :: !Subject,
+          triple_predicate :: !Predicate,
           triple_object :: !Object,
           triple_id :: !ID,
           triple_time :: !Time,
-          triple_author :: !ID
+          triple_author :: !User_ID
         }
     deriving stock Eq
     deriving stock Ord
@@ -98,7 +122,6 @@ module Trinity where
     adding_new_id_operation_id <- generate_id
     su_add_su_id_triple_id <- generate_id
     su_add_aio_id_triple_id <- generate_id
-
     pure
       (Model
         (Set.fromList
@@ -111,17 +134,17 @@ module Trinity where
         (Set.fromList
           [
             Triple
-              system_user_id
-              adding_new_id_operation_id
+              (Subject system_user_id)
+              (Predicate adding_new_id_operation_id)
               (ID_Object system_user_id)
               su_add_su_id_triple_id
               current_time
-              system_user_id,
+              (User_ID system_user_id),
             Triple
-              system_user_id
-              adding_new_id_operation_id
+              (Subject system_user_id)
+              (Predicate adding_new_id_operation_id)
               (ID_Object adding_new_id_operation_id)
               su_add_aio_id_triple_id
               current_time
-              system_user_id
+              (User_ID system_user_id)
           ]))
